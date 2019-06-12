@@ -6188,6 +6188,10 @@ static int __init binder_init(void)
 	struct binder_device *device;
 	struct hlist_node *tmp;
 
+	ret = binder_create_pools();
+	if (ret)
+		return ret;
+
 	ret = binder_alloc_shrinker_init();
 	if (ret)
 		return ret;
