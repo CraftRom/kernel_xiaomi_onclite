@@ -254,6 +254,13 @@ static int symbol_valid(struct sym_entry *s)
 		if (strcmp(sym_name, special_symbols[i]) == 0)
 			return 0;
 
+	for (i = 0; special_prefixes[i]; i++) {
+		int l = strlen(special_prefixes[i]);
+
+		if (strncmp(sym_name, special_prefixes[i], l) == 0)
+			return 0;
+	}
+
 	for (i = 0; special_suffixes[i]; i++) {
 		int l = strlen(sym_name) - strlen(special_suffixes[i]);
 
