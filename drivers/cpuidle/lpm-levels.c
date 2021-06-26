@@ -1701,9 +1701,6 @@ static int lpm_probe(struct platform_device *pdev)
 
 	cluster_timer_init(lpm_root_node);
 
-	size = num_dbg_elements * sizeof(struct lpm_debug);
-	lpm_debug = NULL;
-
 	register_cluster_lpm_stats(lpm_root_node, NULL);
 
 	ret = cluster_cpuidle_register(lpm_root_node);
