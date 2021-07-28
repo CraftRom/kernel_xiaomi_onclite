@@ -758,7 +758,13 @@ endif
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS   += -Os
 else
-KBUILD_CFLAGS   += -O2
+KBUILD_CFLAGS   += -O3
+endif
+
+ifeq ($(cc-name),clang)
+KBUILD_CFLAGS	+= -funsafe-math-optimizations -mfloat-abi=hard -mcpu=cortex-a53 -mtune=cortex-a53 -mfpu=crypto-neon-fp-armv8
+else
+KBUILD_CFLAGS	+= -funsafe-math-optimizations -mcpu=cortex-a53 -mtune=cortex-a53
 endif
 
 # Tell gcc to never replace conditional load with a non-conditional one
