@@ -36,9 +36,9 @@ echo -e "${txtbld}Username:${txtrst} $KBUILD_BUILD_USER"
 echo -e " "
 
 if ! [ -d "$TC_DIR" ]; then
-echo "Proton clang not found! Cloning to $TC_DIR..."
+echo "$grn Proton clang not found! Cloning to $TC_DIR... $nocol"
 if ! git clone -q --depth=1 --single-branch https://github.com/kdrag0n/proton-clang $TC_DIR; then
-echo "Cloning failed! Aborting..."
+echo "$red Cloning failed! Aborting... $nocol"
 exit 1
 fi
 fi
