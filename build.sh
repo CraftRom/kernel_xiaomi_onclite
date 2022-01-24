@@ -68,10 +68,12 @@ fi
 
 # Build start
 echo -e "$blue    \nStarting kernel compilation...\n $nocol"
-make -j$(nproc --all) O=out ARCH=arm64 CC="ccache clang" AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- Image.gz-dtb
+make -j$(nproc --all) O=out ARCH=arm64 CC="ccache clang" AS=llvm-as AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb
 
 
-if [ -f "out/arch/arm64/boot/Image.gz-dtb" ]; then
+kernel="out/arch/arm64/boot/Image.gz-dtb"
+
+if [ -f "$kernel" ]; then
 echo -e "$blue    \nKernel compiled succesfully! Zipping up...\n $nocol"
 if ! [ -d "AnyKernel3" ]; then
 echo "AnyKernel3 not found! Cloning..."
@@ -79,7 +81,7 @@ if ! git clone https://github.com/CraftRom/AnyKernel3 -b onclite AnyKernel3; the
 echo "Cloning failed! Aborting..."
 fi
 fi
-cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3
+cp $kernel AnyKernel3
 rm -f *zip
 cd AnyKernel3
 zip -r9 "../$ZIPNAME" * -x '*.git*' README.md *placeholder
