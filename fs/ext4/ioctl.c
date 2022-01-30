@@ -767,13 +767,7 @@ resizefs_out:
 		    sizeof(range)))
 			return -EFAULT;
 
-<<<<<<< HEAD
-		range.minlen = max((unsigned int)range.minlen,
-				   q->limits.discard_granularity);
 		ret = ext4_trim_fs(sb, &range, flags);
-=======
-		ret = ext4_trim_fs(sb, &range);
->>>>>>> 067f735c066f... ext4: avoid trim error on fs with small groups
 		if (ret < 0)
 			return ret;
 

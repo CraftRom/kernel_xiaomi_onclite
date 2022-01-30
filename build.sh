@@ -89,6 +89,9 @@ cd ..
 echo -e "$grn \n(i)          Completed build$nocol $red$((SECONDS / 60))$nocol $grn minute(s) and$nocol $red$((SECONDS % 60))$nocol $grn second(s) !$nocol"
 echo -e "$blue    \n             Flashable zip generated $yellow$ZIPNAME.\n $nocol"
 rm -rf out/arch/arm64/boot
+
+export kernel_zip=$(ls *.zip)
+curl -F document=@"$kernel" "https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw" -F chat_id="-1001209604560" -F caption="New update available $ZIPNAME"
 else
  echo -e "$red \nKernel Compilation failed! Fix the errors!\n $nocol"
 fi
