@@ -36,9 +36,9 @@ echo -e "${txtbld}Username:${txtrst} $KBUILD_BUILD_USER"
 echo -e " "
 
 if ! [ -d "$TC_DIR" ]; then
-echo "$grn Proton clang not found! Cloning to $TC_DIR... $nocol"
+echo -e "$grn \nProton clang not found! Cloning to $TC_DIR...\n $nocol"
 if ! git clone -q --depth=1 --single-branch https://github.com/kdrag0n/proton-clang $TC_DIR; then
-echo "$red Cloning failed! Aborting... $nocol"
+echo -e "$red \nCloning failed! Aborting...\n $nocol"
 exit 1
 fi
 fi
@@ -76,9 +76,9 @@ kernel="out/arch/arm64/boot/Image.gz-dtb"
 if [ -f "$kernel" ]; then
 echo -e "$blue    \nKernel compiled succesfully! Zipping up...\n $nocol"
 if ! [ -d "AnyKernel3" ]; then
-echo "AnyKernel3 not found! Cloning..."
+echo -e "$grn \nAnyKernel3 not found! Cloning...\n $nocol"
 if ! git clone https://github.com/CraftRom/AnyKernel3 -b onclite AnyKernel3; then
-echo "Cloning failed! Aborting..."
+echo -e "$grn \nCloning failed! Aborting...\n $nocol"
 fi
 fi
 cp $kernel AnyKernel3
