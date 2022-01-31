@@ -90,8 +90,29 @@ echo -e "$grn \n(i)          Completed build$nocol $red$((SECONDS / 60))$nocol $
 echo -e "$blue    \n             Flashable zip generated $yellow$ZIPNAME.\n $nocol"
 rm -rf out/arch/arm64/boot
 
-export kernel_zip=$(ls *.zip)
-curl -F document=@"$kernel" "https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw" -F chat_id="-1001209604560" -F caption="New update available $ZIPNAME"
+if [[ $1 == "-t" || $1 == "--telegram" ]]; then
+#Push to DataRepository
+echo -e "$blue \nSend to DATA STORAGE\n $nocol" 
+curl -F document=@"$ZIPNAME" "https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw/sendDocument" \
+-F chat_id="-1001209604560" \
+-F "parse_mode=html" \
+-F caption="$(echo -e "======= <b>Redmi7/Y3</b> =======\n
+New update available\n<b>Date:</b> $(date '+%d.%m.%Y  %H:%M')\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n\n#onclite #onc #kernel")" \
+-F chat_id="-1001209604560" \
+-F "disable_web_page_preview=true"
+
+#Push to CraftRom 
+echo -e "$blue \n\nSend to Craft rom\n $nocol"
+curl -F document=@"$ZIPNAME" "https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw/sendDocument" \
+-F chat_id="-1001452770277" \
+-F "parse_mode=html" \
+-F caption="$(echo -e "======= <b>Redmi7/Y3</b> =======\n
+New update available\n<b>Date:</b> $(date '+%d.%m.%Y  %H:%M')\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n\n#onclite #onc #kernel")" \
+-F chat_id="-1001209604560" \
+-F "disable_web_page_preview=true"
+echo -e "$grn \n\n(i)          Send to telegram succesfully!\n $nocol"
+fi
+
 else
  echo -e "$red \nKernel Compilation failed! Fix the errors!\n $nocol"
 fi
