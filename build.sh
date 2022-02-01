@@ -108,6 +108,9 @@ echo -e "$grn \n(i)          Completed build$nocol $red$((SECONDS / 60))$nocol $
 echo -e "$blue    \n             Flashable zip generated $yellow$ZIPNAME.\n $nocol"
 rm -rf out/arch/arm64/boot
 
+# TEMP
+git reset --hard HEAD
+
 if [[ $1 == "-t" || $1 == "--telegram" ]]; then
 #Push to DataRepository
 echo -e "$blue \nSend to DATA STORAGE\n $nocol" 
