@@ -22,17 +22,35 @@ echo -e "░▐█──░▐████─░█▌░▐█▌▐█▒▐�
 echo -e "░▐█▄█░▐█░▐█░▐██░▐█▄█▀▒▐██▄█▌▒▐█▀▄▄░▐██$nocol"
 echo -e " "
 
-ZIPNAME="Chidori-Kernel-onclite-$(date '+%Y%m%d-%H%M').zip"
+KERN_VER=$(echo "$(make kernelversion)")
+BUILD_DATE=$(date '+%Y-%m-%d  %H:%M')
+DEVICE="Redmi7/Y3"
+if [[ $1 == "-n" || $1 == "--night" ]]; then
+TYPE="nightly"
+else
+if [[ $1 == "-s" || $1 == "--stable" ]]; then
+TYPE="stable"
+else
+TYPE="experimental"
+fi
+fi
+KERNELNAME="Chidori-Kernel-$TYPE"
+ZIPNAME="ChidoriKernel-onclite-$(date '+%Y%m%d%H%M')-$TYPE.zip"
 TC_DIR="$HOME/toolchains/proton-clang"
 DEFCONFIG="onclite-perf_defconfig"
+sed -i "51s/.*/CONFIG_LOCALVERSION=\"-${KERNELNAME}\"/g" arch/arm64/configs/$DEFCONFIG
 
 export PATH="$TC_DIR/bin:$PATH"
 export KBUILD_BUILD_USER=melles1991
 export KBUILD_BUILD_HOST=CraftRom-build
 
+echo -e "${txtbld}Type:${txtrst} $TYPE"
 echo -e "${txtbld}Config:${txtrst} $DEFCONFIG"
 echo -e "${txtbld}ARCH:${txtrst} arm64"
+echo -e "${txtbld}Linux:${txtrst} $KERN_VER"
 echo -e "${txtbld}Username:${txtrst} $KBUILD_BUILD_USER"
+echo -e "${txtbld}BuildDate:${txtrst} $BUILD_DATE"
+echo -e "${txtbld}Filename::${txtrst} $ZIPNAME"
 echo -e " "
 
 if ! [ -d "$TC_DIR" ]; then
@@ -96,8 +114,8 @@ echo -e "$blue \nSend to DATA STORAGE\n $nocol"
 curl -F document=@"$ZIPNAME" "https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw/sendDocument" \
 -F chat_id="-1001209604560" \
 -F "parse_mode=html" \
--F caption="$(echo -e "======= <b>Redmi7/Y3</b> =======\n
-New update available\n<b>Date:</b> $(date '+%d.%m.%Y  %H:%M')\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n\n#onclite #onc #kernel")" \
+-F caption="$(echo -e "======= <b>$DEVICE</b> =======\n
+New update available!\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n<b>Type:</b> $TYPE\n<b>BuildDate:</b> $BUILD_DATE\n<b>Filename:</b> $ZIPNAME\n\n#onclite #onc #kernel")" \
 -F chat_id="-1001209604560" \
 -F "disable_web_page_preview=true"
 
@@ -106,8 +124,8 @@ echo -e "$blue \n\nSend to Craft rom\n $nocol"
 curl -F document=@"$ZIPNAME" "https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw/sendDocument" \
 -F chat_id="-1001452770277" \
 -F "parse_mode=html" \
--F caption="$(echo -e "======= <b>Redmi7/Y3</b> =======\n
-New update available\n<b>Date:</b> $(date '+%d.%m.%Y  %H:%M')\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n\n#onclite #onc #kernel")" \
+-F caption="$(echo -e "======= <b>$DEVICE</b> =======\n
+New update available!\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n<b>Type:</b> $TYPE\n<b>BuildDate:</b> $BUILD_DATE\n<b>Filename:</b> $ZIPNAME\n\n#onclite #onc #kernel")" \
 -F chat_id="-1001209604560" \
 -F "disable_web_page_preview=true"
 echo -e "$grn \n\n(i)          Send to telegram succesfully!\n $nocol"
