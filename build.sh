@@ -108,8 +108,17 @@ echo -e "$grn \n(i)          Completed build$nocol $red$((SECONDS / 60))$nocol $
 echo -e "$blue    \n             Flashable zip generated $yellow$ZIPNAME.\n $nocol"
 rm -rf out/arch/arm64/boot
 
-# TEMP
-git reset --hard HEAD
+if [[ $1 == "-n" || $1 == "--night" ]]; then
+#Push to CraftRom 
+echo -e "$blue \n\nSend to Craft rom\n $nocol"
+curl -F document=@"$ZIPNAME" "https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw/sendDocument" \
+-F chat_id="-1001452770277" \
+-F "parse_mode=html" \
+-F caption="$(echo -e "<b>CHIDORI KERNEL | $DEVICE</b>\n
+New update available!\n\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n<b>Type:</b> $TYPE\n<b>BuildDate:</b> $BUILD_DATE\n<b>Filename:</b> $ZIPNAME\n\n#onclite #onc #kernel")" \
+-F chat_id="-1001209604560" \
+-F "disable_web_page_preview=true"
+fi
 
 if [[ $1 == "-t" || $1 == "--telegram" ]]; then
 #Push to DataRepository
@@ -127,13 +136,15 @@ echo -e "$blue \n\nSend to Craft rom\n $nocol"
 curl -F document=@"$ZIPNAME" "https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw/sendDocument" \
 -F chat_id="-1001452770277" \
 -F "parse_mode=html" \
--F caption="$(echo -e "======= <b>$DEVICE</b> =======\n
-New update available!\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n<b>Type:</b> $TYPE\n<b>BuildDate:</b> $BUILD_DATE\n<b>Filename:</b> $ZIPNAME\n\n#onclite #onc #kernel")" \
+-F caption="$(echo -e "<b>CHIDORI KERNEL | $DEVICE</b>\n
+New update available!\n\n<b>Maintainer:</b> $KBUILD_BUILD_USER\n<b>Type:</b> $TYPE\n<b>BuildDate:</b> $BUILD_DATE\n<b>Filename:</b> $ZIPNAME\n\n#onclite #onc #kernel")" \
 -F chat_id="-1001209604560" \
 -F "disable_web_page_preview=true"
+
 echo -e "$grn \n\n(i)          Send to telegram succesfully!\n $nocol"
 fi
-
+# TEMP
+git reset --hard HEAD
 else
  echo -e "$red \nKernel Compilation failed! Fix the errors!\n $nocol"
 fi
