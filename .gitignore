@@ -129,3 +129,4 @@ Android.bp
 /stock/
 /clang/
 *.zip
+build.log
