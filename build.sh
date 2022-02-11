@@ -179,13 +179,13 @@ fi
 
 # Build start
 echo -e "$blue    \nStarting kernel compilation...\n $nocol"
-make -j$(nproc --all) O=out ARCH=arm64 CC="ccache clang" LD=ld.lld AS=llvm-as AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb dtbo.img
+make -j$(nproc --all) O=out ARCH=arm64 CC="ccache clang" AS=llvm-as AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb dtbo.img
 
 
 kernel="out/arch/arm64/boot/Image.gz-dtb"
 dtbo="out/arch/arm64/boot/dtbo.img"
 
-if [ -f "$kernel" ] && [ -f "$dtb" ] && [ -f "$dtbo" ]; then
+if [ -f "$kernel" ] && [ -f "$dtbo" ]; then
 	echo -e "$blue    \nKernel compiled succesfully! Zipping up...\n $nocol"
 	if ! [ -d "AnyKernel3" ]; then
 		echo -e "$grn \nAnyKernel3 not found! Cloning...\n $nocol"
@@ -195,7 +195,6 @@ if [ -f "$kernel" ] && [ -f "$dtb" ] && [ -f "$dtbo" ]; then
 	fi
 
 	cp $kernel $dtbo AnyKernel3
-	cp $dtb AnyKernel3/dtb
 	rm -f *zip
 	cd AnyKernel3
 	zip -r9 "../$ZIPNAME" * -x '*.git*' README.md *placeholder
