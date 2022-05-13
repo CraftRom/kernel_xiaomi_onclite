@@ -219,16 +219,12 @@ static int symbol_valid(const struct sym_entry *s)
 		"_SDA2_BASE_",		/* ppc */
 		NULL };
 
-<<<<<<< HEAD
-	static char *special_suffixes[] = {
-=======
 	static const char * const special_prefixes[] = {
                 "__crc_",               /* modversions */
 		"__efistub_",		/* arm64 EFI stub namespace */
 		NULL };
 
 	static const char * const special_suffixes[] = {
->>>>>>> 01016006d2c6... scripts/kallsyms: add const qualifiers where possible
 		"_veneer",		/* arm */
 		"_from_arm",		/* arm */
 		"_from_thumb",		/* arm */
