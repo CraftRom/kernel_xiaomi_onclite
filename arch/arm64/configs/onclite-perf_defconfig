@@ -1411,6 +1411,7 @@ CONFIG_BATTERY_SAVER=y
 # FingerprintCard fingerprint driver
 #
 # CONFIG_FPR_FPC is not set
+# CONFIG_HQ_SYSFS_SUPPORT is not set
 
 #
 # SCSI device support
