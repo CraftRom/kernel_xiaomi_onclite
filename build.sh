@@ -130,8 +130,8 @@ fi
 # Telegram setup
 push_message() {
     curl -s -X POST \
-        https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw/sendMessage \
-        -d chat_id="-1001209604560" \
+        https://api.telegram.org/bot5579959772:AAHJ1cvfipl05kxYhNQBvLy7b60vGmeQSRE/sendMessage \
+        -d chat_id="-1001695676652" \
         -d text="$1" \
         -d "parse_mode=html" \
         -d "disable_web_page_preview=true"
@@ -139,8 +139,8 @@ push_message() {
 
 push_document() {
     curl -s -X POST \
-        https://api.telegram.org/bot1472514287:AAG9kYDURtPvQLM9RXN_zv4h79CIbRCPuPw/sendDocument \
-        -F chat_id="-1001209604560" \
+        https://api.telegram.org/bot5579959772:AAHJ1cvfipl05kxYhNQBvLy7b60vGmeQSRE/sendDocument \
+        -F chat_id="-1001695676652" \
         -F document=@"$1" \
         -F caption="$2" \
         -F "parse_mode=html" \
